@@ -1,0 +1,15 @@
+aitviwer==1.12
+open3d
+spconv-cudaxx
+cgal
+rtree
+ftfy
+regex
+tqdm
+trimesh
+einops
+pyrender
+ipdb
+git+https://github.com/openai/CLIP.git
+git+https://github.com/otaheri/chamfer_distance
+git+https://github.com/otaheri/bps_torch

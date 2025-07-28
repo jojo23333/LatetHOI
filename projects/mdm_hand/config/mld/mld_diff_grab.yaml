@@ -1,0 +1,29 @@
+TRAINING:
+  BATCH_SIZE: 64
+
+DATASET:
+  NAME: grab_motion_mld
+  NUM_WORKERS: 4
+
+MODEL:
+  INPUT_DIM: 75
+
+SOLVER:
+  MAX_ITER: 100000
+  MAX_EPOCH: 1250
+  CHECKPOINT_PERIOD: 5000
+  BASE_LR: 2e-4
+  BASE_LR_END: 2e-5   # The end lr, only used by WarmupCosineLR
+  WEIGHT_DECAY: 1e-4
+  LR_SCHEDULER_NAME: "WarmupCosineLR"
+  WARMUP_FACTOR: 1e-4
+  WARMUP_ITERS: 200
+  WARMUP_METHOD: "linear"
+
+TEST:
+  SPLIT: "test"
+  BATCH_SIZE: 1
+  EVAL_PERIOD: 10000
+
+DIFFUSION:
+  VAE_CHECKPOINT: '.exps/11_12_mld_vae_grab/model_final.pth'

@@ -1,0 +1,33 @@
+TRAINING:
+  BATCH_SIZE: 32
+
+DATASET:
+  NAME: grab_latent_motion
+  NUM_WORKERS: 4
+  POSE:
+    GRAB: True
+    DexYCB: False
+
+SOLVER:
+  MAX_ITER: 100000
+  MAX_EPOCH: 1250
+  CHECKPOINT_PERIOD: 5000
+  BASE_LR: 2e-4
+  BASE_LR_END: 2e-5   # The end lr, only used by WarmupCosineLR
+  WEIGHT_DECAY: 1e-4
+  LR_SCHEDULER_NAME: "WarmupCosineLR"
+  WARMUP_FACTOR: 1e-4
+  WARMUP_ITERS: 200
+  WARMUP_METHOD: "linear"
+
+DIFFUSION:
+  VAE_CHECKPOINT: '.exps/05_16_VAE_grab_graspXL_finetune_aug+/model_0016999.pth'
+  LDM_SHARE_REPARAM: True
+
+MODEL:
+  INPUT_DIM: 47
+
+TEST:
+  SPLIT: "test"
+  BATCH_SIZE: 1
+  EVAL_PERIOD: 10000

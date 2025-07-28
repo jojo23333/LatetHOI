@@ -1,0 +1,22 @@
+TRAINING:
+  BATCH_SIZE: 32
+
+DATASET:
+  NAME: oakink_fake_motion_latent
+  NUM_WORKERS: 4
+  POSE:
+    GRAB: False
+    DexYCB: False
+
+DIFFUSION:
+  VAE_CHECKPOINT: '.exps/05_08_grab_vae/model_0011999.pth'
+  LDM_SHARE_REPARAM: True
+
+MODEL:
+  INPUT_DIM: 47
+  WEIGHTS: '.exps/SELECTED_RESULTS/GRAB/GRAB_LDM_AUG+_05_15/model_final.pth'
+
+TEST:
+  SPLIT: "test"
+  BATCH_SIZE: 1
+  EVAL_PERIOD: 10000

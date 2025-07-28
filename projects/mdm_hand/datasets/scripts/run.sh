@@ -1,0 +1,2 @@
+python -m tools.train_hdm --resume --num-gpus 8 --config-file config/arctic/HOI_CO.yaml MODEL.BACKBONE kpho_transformer_co OUTPUT_DIR ./exps/6d_hoi_co_kp_2_rel_trans
+python -m tools.train_hdm --resume --num-gpus 8 --config-file config/arctic/HOI_CO.yaml MODEL.BACKBONE ho_transformer_co OUTPUT_DIR ./exps/6d_hoi_co_3_rel_trans
