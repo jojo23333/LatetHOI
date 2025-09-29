@@ -16,7 +16,7 @@
 ## TODO
 - [x] Code cleanup and refactoring
 - [x] Integrate motionrender for visualization
-- [ ] OOD test set of Oakink Objects
+- [x] Release test set of OOD Oakink Objects
 - [ ] Upload pretrained checkpoints to HuggingFace
 
 ## Environment Setup
@@ -38,6 +38,11 @@ data/
     └── mano/
         ├── MANO_LEFT.pkl
         └── MANO_RIGHT.pkl
+    └── grab/
+        ├── grab_frames
+        └── grab_seq20fps
+    └── oakink/
+        └── oakink_aligned
 ```
 
 ### Download processed dataset
@@ -50,6 +55,13 @@ wget https://huggingface.co/datasets/jojo23333/LatentHOI-data/resolve/main/grab_
 tar -xzvf grab_frames.tar.gz
 tar -xzvf grab_seq20fps.tar.gz
 ```
+
+**We also provide preprocessed oakink split used in our code, with mesh cordiante direction calibrated with Grab objects**
+```
+cd projects/mdm_hand/data
+unzip oakink.zip
+```
+
 
 ### (Alternatively) Prepare from Raw
 All data preparation scripts should be run from the `projects/mdm_hand/datasets/GRAB` directory.
@@ -96,8 +108,13 @@ python -m tools.train_diff --num-gpus 2 --mode ldm --resume --config config/grab
 python -m tools.train_diff --num-gpus 2 --mode ldm --resume --config config/dexycb/LDM_pretrain_vae.yaml 
 ```
 
+## Motion Generation 
+```
+# Generate for Oakink split
+python -m tools.train_diff --mode ldm --eval-only --config config/oakink/ldm_oakink.yaml TEST.BATCH_SIZE 9
+```
 
-## Evaluation
+## Motion Visualization & Evaluation
 During training, middle result for evalution will be stored with the frequency defined by TEST.EVAL_PERIOD.
 <path_to_vis_folder> should contain evaluated result in the form of .pth, below command will visualize/evalutate all the .pth file in the folder
 ```python
