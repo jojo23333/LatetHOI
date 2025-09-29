@@ -14,9 +14,10 @@
 - [Troubleshooting](#troubleshooting)
 
 ## TODO
-- [ ] Code cleanup and refactoring
+- [x] Code cleanup and refactoring
+- [x] Integrate motionrender for visualization
+- [ ] OOD test set of Oakink Objects
 - [ ] Upload pretrained checkpoints to HuggingFace
-- [ ] Integrate motionrender for visualization
 
 ## Environment Setup
 For environment setup instructions, please refer to [projects/mdm_hand/environment.md](projects/mdm_hand/environment.md).
@@ -78,44 +79,45 @@ python grab/graspxl_preprocessing.py
 ## Training
 ### GraspVAE 
 ```python
-# GraspXL
-python -m tools.train_vae --num-gpus 3 --resume --config config/grab/VAE_graspXL.yaml OUTPUT_DIR .exps/graspXL_vae TRAINING.BATCH_SIZE 320
-
 # GRAB
 python -m tools.train_vae --num-gpus 1 --resume --config config/VAE/VAE_grab.yaml
 
 # DexYCB
-python -m tools.train_vae --num-gpus 1 --resume --config config/grab/dexycb.yaml
+python -m tools.train_vae --num-gpus 1 --resume --config config/VAE/VAE_dexycb.yaml
 ```
 
 ### Latent Diffusion
+In configs, replace the DIFFUSION.VAE_CHECKPOINT with your trained vae checkpoint from above
 ```python
 # GRAB
-python -m tools.train_diff --num-gpus 2 --mode ldm --resume --config config/grab/LDM_pretrain_vae_AUG+.yaml  TRAINING.BATCH_SIZE 48
+python -m tools.train_diff --num-gpus 2 --mode ldm --resume --config config/grab/LDM_pretrain_vae.yaml 
 
 # DexYCB
-python -m tools.train_diff -m ldm --num-gpus 1 --resume --config config/dexycb/DEX_LDM.yaml  OUTPUT_DIR .exps/LDM_DEXYCB_AUG+  TRAINING.BATCH_SIZE 32 DATASET.NUM_WORKERS 4
+python -m tools.train_diff --num-gpus 2 --mode ldm --resume --config config/dexycb/LDM_pretrain_vae.yaml 
 ```
 
+
 ## Evaluation
+During training, middle result for evalution will be stored with the frequency defined by TEST.EVAL_PERIOD.
+<path_to_vis_folder> should contain evaluated result in the form of .pth, below command will visualize/evalutate all the .pth file in the folder
 ```python
 # Basic evaluation
-python -m tools.eval_motion -f .exps/SELECTED_RESULTS/GRAB/GRAB_LDM_AUG+_05_15/vis/93750/
+python -m tools.eval_motion -f <path_to_vis_folder>
 
 # With visualization (generates videos)
-python -m tools.eval_motion -f .exps/SELECTED_RESULTS/GRAB/GRAB_LDM_AUG+_05_15/vis/93750/ --vis
+python -m tools.eval_motion -f <path_to_vis_folder> --vis
 
 # With physics evaluation
-python -m tools.eval_motion -f .exps/SELECTED_RESULTS/GRAB/GRAB_LDM_AUG+_05_15/vis/93750/ --eval
+python -m tools.eval_motion -f <path_to_vis_folder> --eval
 
 # For DexYCB dataset
-eval_motion -f .exps/SELECTED_RESULTS/GRAB/GRAB_LDM_AUG+_05_15/vis/93750/ --dex
+eval_motion -f <path_to_vis_folder> --dex
 ```
 
 ## Visualization
 Visualization is integrated into the evaluation process. Use the `--vis` flag with the evaluation command to generate videos of the hand motions:
 ```python
-python -m tools.eval_motion -f .exps/SELECTED_RESULTS/GRAB/GRAB_LDM_AUG+_05_15/vis/93750/ --vis
+python -m tools.eval_motion -f <path_to_vis_folder> --vis
 ```
 
 ## Troubleshooting

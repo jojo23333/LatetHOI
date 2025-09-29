@@ -1,0 +1,38 @@
+TRAINING:
+  BATCH_SIZE: 256
+
+DATASET:
+  NAME: dexycb_pose
+  NUM_WORKERS: 4
+  POSE:
+    GRAB: True
+    DexYCB: False
+
+SOLVER:
+  MAX_ITER: 0
+  MAX_EPOCH: 100
+  CHECKPOINT_PERIOD: 2000
+  BASE_LR: 2e-4
+  BASE_LR_END: 2e-5   # The end lr, only used by WarmupCosineLR
+  WEIGHT_DECAY: 1e-4
+  LR_SCHEDULER_NAME: "WarmupCosineLR"
+  WARMUP_FACTOR: 1e-4
+  WARMUP_ITERS: 500
+  WARMUP_METHOD: "linear"
+  CKPT_KEEP_NUM: 20
+
+VAE:
+  pointnet_hc: 64
+  kl_annealing_epoch: 25
+  kl_annealing: True
+  kl_coef: 0.5
+  obj_feature: 6
+  latentD: 16
+  contact_cond: False
+
+TEST:
+  BATCH_SIZE: 32
+  EVAL_PERIOD: 2000
+  VIS_NUM: 50
+
+AMP_ENABLED: False
