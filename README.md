@@ -17,7 +17,7 @@
 - [x] Code cleanup and refactoring
 - [x] Integrate motionrender for visualization
 - [x] Release test set of OOD Oakink Objects
-- [ ] Upload pretrained checkpoints to HuggingFace
+- [x] Uploaded Pretrained GraspVAE Checkpoint
 
 ## Environment Setup
 For environment setup instructions, please refer to [projects/mdm_hand/environment.md](projects/mdm_hand/environment.md).
@@ -97,6 +97,8 @@ python -m tools.train_vae --num-gpus 1 --resume --config config/VAE/VAE_grab.yam
 # DexYCB
 python -m tools.train_vae --num-gpus 1 --resume --config config/VAE/VAE_dexycb.yaml
 ```
+
+Or you can use my pretrained graspvae here: https://drive.google.com/drive/folders/13dvExxUbENk9DF4XhNBO1NKAC7tx0Em8?usp=sharing
 
 ### Latent Diffusion
 In configs, replace the DIFFUSION.VAE_CHECKPOINT with your trained vae checkpoint from above
