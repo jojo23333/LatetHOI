@@ -174,6 +174,9 @@ dataset.mean_latent, dataset.std_latent = mean_latent.numpy(), std_latent.numpy(
 Adding `.numpy()` converts tensors to numpy arrays, solving the shared tensor issue.
 
 
+## Acknowledgements
+We thank the authors of [ARCTIC](https://github.com/zc-alexfan/arctic) for their great work. Part of the visualization code in `projects/mdm_hand/utils/visualize/aitviewer.py` is adapted from their repository.
+
 ## Citation
 ```bibtex
 @InProceedings{Muchen_LatentHOI,
