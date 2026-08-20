@@ -484,11 +484,11 @@ class LatentDiffWrapper:
             # Do ablation on latent here
             # Instead of using latent by diffusion model, resample from gaussian
             ################################################################################################
-            zgen = torch.from_numpy(np.random.normal(0., 1., size=(diff_pose.shape[0], diff_pose.shape[1], 32))).to(diff_pose)
+            # zgen = torch.from_numpy(np.random.normal(0., 1., size=(diff_pose.shape[0], diff_pose.shape[1], 32))).to(diff_pose)
             # diff_pose_decoded = self.decode_latent_grab(zgen, diff_pose[..., 32:], y)
-            diff_pose_decoded = self.decode_latent_grab(zgen, data['feat'].to(self.device), y)
+            # diff_pose_decoded = self.decode_latent_grab(zgen, data['feat'].to(self.device), y)
             ################################################################################################
-            # diff_pose_decoded = self.decode_latent_grab(diff_pose[..., :32], diff_pose[..., 32:], y)
+            diff_pose_decoded = self.decode_latent_grab(diff_pose[..., :32], diff_pose[..., 32:], y)
         else:
             diff_pose_decoded = self.decode_latent_dexycb(diff_pose[..., :16], diff_pose[..., 16:], y)
         return diff_pose_decoded
